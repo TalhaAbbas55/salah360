@@ -1,26 +1,308 @@
 @import "tailwindcss";
 
+/*
+ * Salah360 design tokens.
+ *
+ * Components use SEMANTIC utilities (bg-background, text-foreground, border-border, bg-primary…),
+ * never raw colors. Every token has a light and a dark value below, so sections switch theme
+ * without `dark:` variants. The brand emerald matches the mobile app (#047857 light, #10b981 dark).
+ *
+ * The theme is resolved before first paint by the script in `lib/theme/theme-script.ts`, which sets
+ * `data-theme` on <html>. The media query is the fallback when that script can't run.
+ */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  color-scheme: light;
+
+  /* Surfaces */
+  --background: #f7f5ef;
+  --surface: #ffffff;
+  --surface-muted: #efece3;
+  --surface-glass: rgb(255 255 255 / 0.66);
+  --border: #e3dfd3;
+  --border-strong: #cfc8b6;
+
+  /* Text */
+  --foreground: #0c1a15;
+  --muted: #4c5c55;
+  --subtle: #6f7c75;
+
+  /* Brand */
+  --primary: #047857;
+  --primary-strong: #065f46;
+  --primary-soft: #e2f0e8;
+  /* Emerald text that reads well on --primary-soft. */
+  --primary-ink: #065f46;
+  --primary-foreground: #ffffff;
+  --gold: #9a6f26;
+  --gold-soft: #f3e8cf;
+
+  /* Always-dark emerald band (For Masjids, final CTA) — identical in both themes. */
+  --band: #062a1f;
+  --band-deep: #041a13;
+  --band-foreground: #eef5f1;
+  --band-muted: #a9c2b7;
+
+  /* Visuals */
+  --globe-dot: 4 120 87;
+  --globe-dot-alpha: 0.78;
+  --globe-marker: 4 120 87;
+  --globe-accent: 168 124 48;
+  --glow: rgb(4 120 87 / 0.16);
+  --shadow: 12 26 21;
+  --pattern: rgb(4 120 87 / 0.07);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --background: #050e0b;
+    --surface: #0a1813;
+    --surface-muted: #0f2019;
+    --surface-glass: rgb(10 24 19 / 0.62);
+    --border: #163127;
+    --border-strong: #274437;
+    --foreground: #ecf3ef;
+    --muted: #a0b3aa;
+    --subtle: #7d9087;
+    --primary: #10b981;
+    --primary-strong: #34d399;
+    --primary-soft: #0d2a1f;
+    --primary-ink: #6ee7b7;
+    --primary-foreground: #04130d;
+    --gold: #d6ae62;
+    --gold-soft: #2a2213;
+    --band: #0a1f18;
+    --band-deep: #04120d;
+    --globe-dot: 110 231 183;
+    --globe-dot-alpha: 0.42;
+    --globe-marker: 52 211 153;
+    --globe-accent: 214 174 98;
+    --glow: rgb(16 185 129 / 0.2);
+    --shadow: 0 0 0;
+    --pattern: rgb(110 231 183 / 0.05);
+  }
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --background: #050e0b;
+  --surface: #0a1813;
+  --surface-muted: #0f2019;
+  --surface-glass: rgb(10 24 19 / 0.62);
+  --border: #163127;
+  --border-strong: #274437;
+  --foreground: #ecf3ef;
+  --muted: #a0b3aa;
+  --subtle: #7d9087;
+  --primary: #10b981;
+  --primary-strong: #34d399;
+  --primary-soft: #0d2a1f;
+  --primary-ink: #6ee7b7;
+  --primary-foreground: #04130d;
+  --gold: #d6ae62;
+  --gold-soft: #2a2213;
+  --band: #0a1f18;
+  --band-deep: #04120d;
+  --globe-dot: 110 231 183;
+  --globe-dot-alpha: 0.42;
+  --globe-marker: 52 211 153;
+  --globe-accent: 214 174 98;
+  --glow: rgb(16 185 129 / 0.2);
+  --shadow: 0 0 0;
+  --pattern: rgb(110 231 183 / 0.05);
 }
 
 @theme inline {
   --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-surface-muted: var(--surface-muted);
+  --color-surface-glass: var(--surface-glass);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-muted: var(--muted);
+  --color-subtle: var(--subtle);
+  --color-primary: var(--primary);
+  --color-primary-strong: var(--primary-strong);
+  --color-primary-soft: var(--primary-soft);
+  --color-primary-ink: var(--primary-ink);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-gold: var(--gold);
+  --color-gold-soft: var(--gold-soft);
+  --color-band: var(--band);
+  --color-band-deep: var(--band-deep);
+  --color-band-foreground: var(--band-foreground);
+  --color-band-muted: var(--band-muted);
+
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-instrument-serif), ui-serif, Georgia, serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+  --font-urdu: var(--font-nastaliq), serif;
+
+  --animate-float: float 7s ease-in-out infinite;
+  --animate-float-delayed: float 8s ease-in-out -3s infinite;
+  --animate-ping-soft: ping-soft 2.4s cubic-bezier(0, 0, 0.2, 1) infinite;
+  --animate-spin-slow: spin 60s linear infinite;
+  --animate-spin-slow-reverse: spin 60s linear infinite reverse;
+  --animate-fade-up: fade-up 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-dash: dash 3s linear infinite;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
   }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes ping-soft {
+  0% {
+    transform: scale(1);
+    opacity: 0.55;
+  }
+  80%,
+  100% {
+    transform: scale(2.6);
+    opacity: 0;
+  }
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes dash {
+  to {
+    stroke-dashoffset: -24;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+  font-feature-settings: "ss01", "cv11";
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+
+:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+section[id],
+[data-anchor] {
+  scroll-margin-top: 88px;
+}
+
+/* Subtle card lift used across sections. */
+.card-shadow {
+  box-shadow:
+    0 1px 0 rgb(255 255 255 / 0.04) inset,
+    0 1px 2px rgb(var(--shadow) / 0.04),
+    0 12px 32px -12px rgb(var(--shadow) / 0.12);
+}
+
+.card-shadow-lg {
+  box-shadow:
+    0 1px 0 rgb(255 255 255 / 0.05) inset,
+    0 2px 4px rgb(var(--shadow) / 0.04),
+    0 32px 64px -24px rgb(var(--shadow) / 0.28);
+}
+
+/* Hairline gradient border for glass cards. */
+.hairline {
+  position: relative;
+}
+.hairline::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(160deg, rgb(255 255 255 / 0.5), rgb(255 255 255 / 0) 40%, rgb(255 255 255 / 0.08));
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+.text-pretty {
+  text-wrap: pretty;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* Body text for legal pages (Privacy, Terms). */
+.legal-prose {
+  color: var(--muted);
+  font-size: 1.0625rem;
+  line-height: 1.75;
+}
+.legal-prose > * + * {
+  margin-top: 1rem;
+}
+.legal-prose h3 {
+  margin-top: 1.75rem;
+  color: var(--foreground);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+.legal-prose ul {
+  list-style: disc;
+  padding-inline-start: 1.25rem;
+}
+.legal-prose li + li {
+  margin-top: 0.5rem;
+}
+.legal-prose li::marker {
+  color: var(--primary);
+}
+.legal-prose strong {
+  color: var(--foreground);
+  font-weight: 600;
+}
+.legal-prose a {
+  color: var(--primary);
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: 4px;
 }
