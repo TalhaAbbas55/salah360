@@ -1,7 +1,7 @@
 'use client';
 
 import { Check, Copy, Send } from 'lucide-react';
-import { useId, useState, type FormEvent } from 'react';
+import { useId, useState, type ChangeEvent, type FormEvent } from 'react';
 
 import { getContactTopics } from '@/content/contact';
 import type { Lang } from '@/lib/i18n/lang';
@@ -61,18 +61,34 @@ const COPY: Record<
   },
 };
 
+/** Maps deep-link query values (e.g. from the Play Console) to a topic id. */
+const TOPIC_PARAM_ALIASES: Record<string, string> = {
+  'privacy-account': 'privacy',
+};
+
 /**
  * The site has no backend, so this form writes the email for the visitor: it opens their
  * email app with the topic, message and name already filled in, ready to send.
  */
-export function ContactForm({ lang }: { lang: Lang }) {
+export function ContactForm({ lang, initialTopic }: { lang: Lang; initialTopic?: string }) {
   const id = useId();
   const copy = COPY[lang];
   const topics = getContactTopics(lang);
-  const [topicId, setTopicId] = useState(topics[0].id);
+  const resolvedInitialTopicId = initialTopic ? (TOPIC_PARAM_ALIASES[initialTopic] ?? initialTopic) : undefined;
+  const initialTopicItem = topics.find((topic) => topic.id === resolvedInitialTopicId) ?? topics[0];
+  const [topicId, setTopicId] = useState(initialTopicItem.id);
   const [name, setName] = useState('');
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState(initialTopicItem.messageTemplate ?? '');
   const [copied, setCopied] = useState(false);
+
+  const onTopicChange = (event: ChangeEvent<HTMLSelectElement>) => {
+    const nextTopicId = event.target.value;
+    setTopicId(nextTopicId);
+    const nextTopic = topics.find((topic) => topic.id === nextTopicId);
+    if (nextTopic?.messageTemplate && !message.trim()) {
+      setMessage(nextTopic.messageTemplate);
+    }
+  };
 
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -118,7 +134,7 @@ export function ContactForm({ lang }: { lang: Lang }) {
             id={`${id}-topic`}
             name="topic"
             value={topicId}
-            onChange={(event) => setTopicId(event.target.value)}
+            onChange={onTopicChange}
             className={`${FIELD} appearance-none bg-[length:18px] bg-no-repeat pe-10 ltr:bg-[position:right_14px_center] rtl:bg-[position:left_14px_center] bg-[url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%20fill='none'%20stroke='%236f7c75'%20stroke-width='2'%3E%3Cpath%20d='m6%209%206%206%206-6'/%3E%3C/svg%3E")]`}
           >
             {topics.map((topic) => (

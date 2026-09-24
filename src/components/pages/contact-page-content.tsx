@@ -17,6 +17,7 @@ const COPY: Record<
     emailLabel: string;
     replyNote: string;
     howCanWeHelp: string;
+    deletionNote: string;
     privacyLead: string;
     privacyLink: string;
   }
@@ -29,6 +30,8 @@ const COPY: Record<
     emailLabel: 'Email',
     replyNote: 'We read every message and reply as soon as we can, in shā’ Allāh.',
     howCanWeHelp: 'How can we help?',
+    deletionNote:
+      "To delete your account and your data, select “Privacy, your account & deletion” below and send us your request.",
     privacyLead: 'For how we handle your information, see our',
     privacyLink: 'Privacy Policy',
   },
@@ -40,12 +43,14 @@ const COPY: Record<
     emailLabel: 'ای میل',
     replyNote: 'ہم ہر پیغام پڑھتے ہیں اور جتنی جلدی ممکن ہو جواب دیتے ہیں، اِن شاء اللہ۔',
     howCanWeHelp: 'ہم کیسے مدد کر سکتے ہیں؟',
+    deletionNote:
+      'اپنا اکاؤنٹ اور ڈیٹا حذف کروانے کے لیے، نیچے "رازداری، آپ کا اکاؤنٹ اور حذف کرنا" منتخب کریں اور ہمیں اپنی درخواست بھیجیں۔',
     privacyLead: 'ہم آپ کی معلومات کیسے سنبھالتے ہیں، اس کے لیے دیکھیں ہماری',
     privacyLink: 'رازداری کی پالیسی',
   },
 };
 
-export function ContactPageContent({ lang }: { lang: Lang }) {
+export function ContactPageContent({ lang, topic }: { lang: Lang; topic?: string }) {
   const copy = COPY[lang];
   const links = ctaLinks(lang);
   return (
@@ -71,6 +76,7 @@ export function ContactPageContent({ lang }: { lang: Lang }) {
           <p className="mt-4 px-2 text-sm leading-relaxed text-muted">{copy.replyNote}</p>
 
           <h2 className="mt-10 text-xs font-medium uppercase tracking-[0.14em] text-subtle">{copy.howCanWeHelp}</h2>
+          <p className="mt-2 px-2 text-sm leading-relaxed text-muted">{copy.deletionNote}</p>
           <ul className="mt-4 space-y-3">
             {getContactTopics(lang).map(({ id, icon: Icon, title, body, subject }) => (
               <li key={id}>
@@ -108,7 +114,7 @@ export function ContactPageContent({ lang }: { lang: Lang }) {
         </div>
 
         <div className="lg:pt-0">
-          <ContactForm lang={lang} />
+          <ContactForm lang={lang} initialTopic={topic} />
         </div>
       </div>
     </SimplePage>

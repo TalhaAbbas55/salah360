@@ -9,9 +9,11 @@ export type ContactTopic = {
   body: string;
   /** Email subject used when this topic is chosen. */
   subject: string;
+  /** Prefilled message text used when this topic is chosen. */
+  messageTemplate?: string;
 };
 
-type TopicCopy = { id: string; title: string; body: string; subject: string };
+type TopicCopy = { id: string; title: string; body: string; subject: string; messageTemplate?: string };
 
 const TOPIC_ICONS: Record<string, LucideIcon> = {
   general: CircleHelp,
@@ -42,9 +44,11 @@ const TOPICS_BY_LANG: Record<Lang, readonly TopicCopy[]> = {
     },
     {
       id: 'privacy',
-      title: 'Privacy & your account',
-      body: 'Ask for a copy of your information, a correction, or help deleting your account.',
-      subject: 'Privacy request',
+      title: 'Privacy, your account & deletion',
+      body: 'Request deletion of your account and data, or ask about privacy.',
+      subject: 'Privacy or account deletion request',
+      messageTemplate:
+        'I would like to request deletion of my account and associated data. My account email is: ',
     },
   ],
   ur: [
@@ -68,9 +72,11 @@ const TOPICS_BY_LANG: Record<Lang, readonly TopicCopy[]> = {
     },
     {
       id: 'privacy',
-      title: 'رازداری اور آپ کا اکاؤنٹ',
-      body: 'اپنی معلومات کی کاپی، تصحیح، یا اکاؤنٹ حذف کرنے میں مدد کی درخواست کریں۔',
-      subject: 'رازداری کی درخواست',
+      title: 'رازداری، آپ کا اکاؤنٹ اور حذف کرنا',
+      body: 'اپنا اکاؤنٹ اور ڈیٹا حذف کروانے کی درخواست کریں، یا رازداری کے بارے میں پوچھیں۔',
+      subject: 'رازداری یا اکاؤنٹ حذف کرنے کی درخواست',
+      messageTemplate:
+        'میں اپنا اکاؤنٹ اور اس سے منسلک ڈیٹا حذف کروانا چاہتا/چاہتی ہوں۔ میرا اکاؤنٹ ای میل یہ ہے: ',
     },
   ],
 };

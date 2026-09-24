@@ -9,6 +9,11 @@ export const metadata: Metadata = {
   alternates: { canonical: '/ur/contact', languages: { en: '/contact', ur: '/ur/contact' } },
 };
 
-export default function ContactPage() {
-  return <ContactPageContent lang="ur" />;
+export default async function ContactPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ topic?: string }>;
+}) {
+  const { topic } = await searchParams;
+  return <ContactPageContent lang="ur" topic={topic} />;
 }
