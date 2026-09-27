@@ -4,7 +4,7 @@ import type { NextConfig } from "next";
  * The Salah360 backend, e.g. https://api.salah360.net. Server-side only, read when the
  * site is built/started. Unset (local dev), the rewrite below is simply not added.
  */
-const apiUrl = process.env.SALAH360_API_URL?.replace(/\/+$/, "");
+const apiUrl = process.env.BACKEND_API_URL?.replace(/\/+$/, "");
 
 const nextConfig: NextConfig = {
   async rewrites() {
