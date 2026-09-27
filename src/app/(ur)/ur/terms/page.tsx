@@ -1,12 +1,12 @@
 import type { Metadata } from 'next';
 
 import { TermsPageContent } from '@/components/pages/terms-page-content';
+import { pageMetadata } from '@/lib/seo/metadata';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata('ur', '/terms', {
   title: 'شرائط',
   description: 'Salah360 استعمال کرنے کی شرائط۔',
-  alternates: { canonical: '/ur/terms', languages: { en: '/terms', ur: '/ur/terms' } },
-};
+});
 
 export default function TermsPage() {
   return <TermsPageContent lang="ur" />;

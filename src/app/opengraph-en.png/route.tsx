@@ -2,14 +2,19 @@ import { ImageResponse } from 'next/og';
 
 import { SITE_COPY } from '@/lib/site-config';
 
-export const alt = 'Salah360 — Never Miss Salah With Jamaat';
-export const size = { width: 1200, height: 630 };
-export const contentType = 'image/png';
+// GET route handlers are dynamic by default; this image never changes between deploys.
+export const dynamic = 'force-static';
 
 const copy = SITE_COPY.en;
 
-/** Social preview: the mark, the promise and a hint of the globe, on the brand's deep emerald. */
-export default function OpenGraphImage() {
+/**
+ * The English social preview, served at a fixed URL (`/opengraph-en.png`, rendered once at
+ * build time) so every English page can list it in its own `openGraph.images`. An
+ * `opengraph-image.tsx` file would get a hashed URL, and Next drops it from any page that
+ * sets its own `openGraph` — which each inner page does, for its own og:title and og:url.
+ * Dimensions and alt text live with the Urdu image's in `lib/seo/metadata.ts`.
+ */
+export function GET() {
   return new ImageResponse(
     <div
       style={{
@@ -46,6 +51,6 @@ export default function OpenGraphImage() {
         Connecting Muslims with Masjids around the world.
       </div>
     </div>,
-    size,
+    { width: 1200, height: 630 },
   );
 }

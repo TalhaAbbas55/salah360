@@ -6,26 +6,41 @@ import { localizePath, type Lang } from './i18n/lang';
  */
 export const siteConfig = {
   name: 'Salah360',
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? 'https://salah360.net',
+  /**
+   * The canonical origin, with no trailing slash. It must be the host that answers 200, not
+   * one that redirects: on Vercel, `salah360.net` 308-redirects to `www.salah360.net`, so
+   * canonical links, the sitemap and og:image all use `www`. A trailing slash in the env
+   * var is stripped, since it would otherwise produce `https://…//privacy` in the sitemap.
+   */
+  url: (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.salah360.net').replace(/\/+$/, ''),
   founder: 'Talha Abbas',
   supportEmail: 'support@salah360.net',
 } as const;
 
-type SiteCopy = { tagline: string; title: string; description: string };
+type SiteCopy = {
+  tagline: string;
+  /** The home page's <title> in search results: the brand plus the words people search for. */
+  searchTitle: string;
+  /** The title shown on social previews (WhatsApp, Facebook, X…): the brand promise. */
+  title: string;
+  description: string;
+};
 
-/** Per-language brand copy, used in <title>/<meta description> and the footer. */
+/** Per-language brand copy, used in <title>/<meta description>, social previews and the footer. */
 export const SITE_COPY: Record<Lang, SiteCopy> = {
   en: {
     tagline: 'Never Miss Salah With Jamaat.',
+    searchTitle: 'Salah360 — Find Nearby Masjids, Prayer & Jamaat Times',
     title: 'Salah360 — Never Miss Salah With Jamaat',
     description:
-      'Salah360 helps you find nearby Masjids, discover prayer times, stay connected with your Masjid, and receive important community alerts wherever you are.',
+      'Salah360 helps you find nearby Masjids (mosques), check prayer and Jamaat times, stay connected with your Masjid, and receive Janazah and community alerts wherever you are.',
   },
   ur: {
     tagline: 'جماعت کے ساتھ نماز کبھی نہ چھوٹے۔',
+    searchTitle: 'Salah360 — قریبی مساجد، نماز اور جماعت کے اوقات',
     title: 'Salah360 — جماعت کے ساتھ نماز کبھی نہ چھوٹے',
     description:
-      'Salah360 آپ کو قریبی مساجد تلاش کرنے، نماز کے اوقات معلوم کرنے، اپنی مسجد سے جڑے رہنے اور جہاں بھی ہوں کمیونٹی کی اہم اطلاعات حاصل کرنے میں مدد دیتا ہے۔',
+      'Salah360 آپ کو قریبی مساجد تلاش کرنے، نماز اور جماعت کے اوقات معلوم کرنے، اپنی مسجد سے جڑے رہنے اور جہاں بھی ہوں نمازِ جنازہ اور کمیونٹی کی اہم اطلاعات حاصل کرنے میں مدد دیتا ہے۔',
   },
 };
 

@@ -2,12 +2,12 @@ import type { Metadata } from 'next';
 
 import { ContactPageContent } from '@/components/pages/contact-page-content';
 import { siteConfig } from '@/lib/site-config';
+import { pageMetadata } from '@/lib/seo/metadata';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata('ur', '/contact', {
   title: 'ہم سے رابطہ کریں',
   description: `Salah360 سے رابطہ کریں — سوالات، مسجد ایڈمن سپورٹ، تصحیحات اور رازداری کی درخواستیں۔ ای میل ${siteConfig.supportEmail}۔`,
-  alternates: { canonical: '/ur/contact', languages: { en: '/contact', ur: '/ur/contact' } },
-};
+});
 
 export default async function ContactPage({
   searchParams,

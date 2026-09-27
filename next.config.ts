@@ -7,6 +7,13 @@ import type { NextConfig } from "next";
 const apiUrl = process.env.BACKEND_API_URL?.replace(/\/+$/, "");
 
 const nextConfig: NextConfig = {
+  async headers() {
+    return [
+      // The admin verification page (proxied below) carries a one-time token: keep it out
+      // of search results even if a crawler finds the link. robots.ts also disallows it.
+      { source: '/verify-admin', headers: [{ key: 'X-Robots-Tag', value: 'noindex, nofollow' }] },
+    ];
+  },
   async rewrites() {
     if (!apiUrl) return [];
     return [

@@ -13,12 +13,15 @@ import { Problem } from '@/components/sections/problem';
 import { Solution } from '@/components/sections/solution';
 import { Story } from '@/components/sections/story';
 import { Travel } from '@/components/sections/travel';
+import { JsonLd } from '@/components/seo/json-ld';
 import type { Lang } from '@/lib/i18n/lang';
+import { homeStructuredData } from '@/lib/seo/structured-data';
 
 /** The whole landing page, shared by the English (`/`) and Urdu (`/ur`) route trees. */
 export function HomePage({ lang }: { lang: Lang }) {
   return (
     <>
+      <JsonLd data={homeStructuredData(lang)} />
       <Navbar lang={lang} />
       <main id="main">
         <Hero lang={lang} />

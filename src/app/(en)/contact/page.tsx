@@ -2,12 +2,12 @@ import type { Metadata } from 'next';
 
 import { ContactPageContent } from '@/components/pages/contact-page-content';
 import { siteConfig } from '@/lib/site-config';
+import { pageMetadata } from '@/lib/seo/metadata';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata('en', '/contact', {
   title: 'Contact Us',
   description: `Get in touch with Salah360 — questions, Masjid Admin support, corrections and privacy requests. Email ${siteConfig.supportEmail}.`,
-  alternates: { canonical: '/contact', languages: { en: '/contact', ur: '/ur/contact' } },
-};
+});
 
 export default async function ContactPage({
   searchParams,
