@@ -7,6 +7,11 @@ import type { NextConfig } from "next";
 const apiUrl = process.env.BACKEND_API_URL?.replace(/\/+$/, "");
 
 const nextConfig: NextConfig = {
+  experimental: {
+    // Lets app/global-not-found.tsx render the 404 page; the two root layouts ((en) and (ur))
+    // leave no single layout for a regular not-found.tsx.
+    globalNotFound: true,
+  },
   async headers() {
     return [
       // The admin verification page (proxied below) carries a one-time token: keep it out

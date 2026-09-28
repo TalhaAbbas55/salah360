@@ -4,6 +4,8 @@
  *   - public/icon-192.png, public/icon-512.png  web app manifest icons (rounded tile)
  *   - public/icon-maskable-512.png              Android adaptive icon: full-bleed, mark in the safe zone
  *   - public/logo.png                           the Organization logo in structured data (Google Search)
+ *   - src/app/favicon.ico                       the favicon browsers and Google Search show next to the
+ *                                               site name (Google wants a multiple of 48px, so 48/96/192 are in it)
  *
  * Run after changing the mark: `node scripts/generate-icons.mjs`
  * (uses sharp, which Next.js already installs for image optimisation).
@@ -28,13 +30,41 @@ const maskable = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40">${
 /** Google shows logos on a white background, so the logo is the tile on white with a margin. */
 const logo = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="-4 -4 48 48"><rect x="-4" y="-4" width="48" height="48" fill="#fff"/>${GRADIENT}<rect width="40" height="40" rx="11" fill="url(#g)"/>${MARK}</svg>`;
 
+function toPng(svg, size) {
+  return sharp(Buffer.from(svg), { density: 1200 }).resize(size, size).png({ compressionLevel: 9 }).toBuffer();
+}
+
 async function render(svg, size, file) {
-  const png = await sharp(Buffer.from(svg), { density: 1200 }).resize(size, size).png({ compressionLevel: 9 }).toBuffer();
+  const png = await toPng(svg, size);
   await writeFile(new URL(`../public/${file}`, import.meta.url), png);
   console.log(`public/${file}  ${size}×${size}  ${(png.length / 1024).toFixed(1)} KB`);
+}
+
+/** An .ico holding one PNG per size (PNG-in-ICO, supported by every current browser and Google). */
+async function renderIco(svg, sizes, file) {
+  const pngs = await Promise.all(sizes.map((size) => toPng(svg, size)));
+  const header = Buffer.alloc(6 + 16 * sizes.length);
+  header.writeUInt16LE(0, 0); // reserved
+  header.writeUInt16LE(1, 2); // type: icon
+  header.writeUInt16LE(sizes.length, 4);
+  let offset = header.length;
+  sizes.forEach((size, i) => {
+    const entry = 6 + 16 * i;
+    header.writeUInt8(size >= 256 ? 0 : size, entry); // width (0 means 256)
+    header.writeUInt8(size >= 256 ? 0 : size, entry + 1); // height
+    header.writeUInt16LE(1, entry + 4); // color planes
+    header.writeUInt16LE(32, entry + 6); // bits per pixel
+    header.writeUInt32LE(pngs[i].length, entry + 8);
+    header.writeUInt32LE(offset, entry + 12);
+    offset += pngs[i].length;
+  });
+  const ico = Buffer.concat([header, ...pngs]);
+  await writeFile(new URL(`../${file}`, import.meta.url), ico);
+  console.log(`${file}  ${sizes.join('/')}px  ${(ico.length / 1024).toFixed(1)} KB`);
 }
 
 await render(tile, 192, 'icon-192.png');
 await render(tile, 512, 'icon-512.png');
 await render(maskable, 512, 'icon-maskable-512.png');
 await render(logo, 512, 'logo.png');
+await renderIco(tile, [16, 32, 48, 96, 192], 'src/app/favicon.ico');

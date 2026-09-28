@@ -30,15 +30,15 @@ type SiteCopy = {
 export const SITE_COPY: Record<Lang, SiteCopy> = {
   en: {
     tagline: 'Never Miss Salah With Jamaat.',
-    searchTitle: 'Salah360 — Find Nearby Masjids, Prayer & Jamaat Times',
-    title: 'Salah360 — Never Miss Salah With Jamaat',
+    searchTitle: 'Salah360 - Find Nearby Masjids, Prayer & Jamaat Times',
+    title: 'Salah360 - Never Miss Salah With Jamaat',
     description:
       'Salah360 helps you find nearby Masjids (mosques), check prayer and Jamaat times, stay connected with your Masjid, and receive Janazah and community alerts wherever you are.',
   },
   ur: {
     tagline: 'جماعت کے ساتھ نماز کبھی نہ چھوٹے۔',
-    searchTitle: 'Salah360 — قریبی مساجد، نماز اور جماعت کے اوقات',
-    title: 'Salah360 — جماعت کے ساتھ نماز کبھی نہ چھوٹے',
+    searchTitle: 'Salah360 - قریبی مساجد، نماز اور جماعت کے اوقات',
+    title: 'Salah360 - جماعت کے ساتھ نماز کبھی نہ چھوٹے',
     description:
       'Salah360 آپ کو قریبی مساجد تلاش کرنے، نماز اور جماعت کے اوقات معلوم کرنے، اپنی مسجد سے جڑے رہنے اور جہاں بھی ہوں نمازِ جنازہ اور کمیونٹی کی اہم اطلاعات حاصل کرنے میں مدد دیتا ہے۔',
   },
