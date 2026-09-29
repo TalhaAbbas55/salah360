@@ -31,6 +31,7 @@ const FOOTER_LABELS_BY_LANG: Record<Lang, readonly { label: string; path: string
     { label: 'About', path: '/#about' },
     { label: 'Privacy', path: '/privacy' },
     { label: 'Terms', path: '/terms' },
+    { label: 'Delete account', path: '/delete-account' },
     { label: 'Contact', path: '/contact' },
   ],
   ur: [
@@ -40,6 +41,7 @@ const FOOTER_LABELS_BY_LANG: Record<Lang, readonly { label: string; path: string
     { label: 'تعارف', path: '/#about' },
     { label: 'رازداری کی پالیسی', path: '/privacy' },
     { label: 'شرائط', path: '/terms' },
+    { label: 'اکاؤنٹ ڈیلیٹ کریں', path: '/delete-account' },
     { label: 'رابطہ', path: '/contact' },
   ],
 };

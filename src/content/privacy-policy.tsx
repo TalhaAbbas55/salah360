@@ -10,8 +10,8 @@ import { siteConfig } from '@/lib/site-config';
  * whenever data handling changes, and bump PRIVACY_LAST_UPDATED.
  */
 export const PRIVACY_LAST_UPDATED: Record<Lang, string> = {
-  en: 'September 23, 2026',
-  ur: '23 ستمبر 2026',
+  en: 'September 28, 2026',
+  ur: '28 ستمبر 2026',
 };
 
 export function getPrivacySections(lang: Lang): readonly LegalSection[] {
@@ -95,6 +95,19 @@ export function getPrivacySections(lang: Lang): readonly LegalSection[] {
                 <strong>اطلاعات کی تفصیلات</strong>، اگر آپ اطلاعات آن کرتے ہیں: ایک پش ٹوکن، ایپ انسٹال ہوتے وقت بننے
                 والا ایک رینڈم آئی ڈی، اور یہ کہ ڈیوائس Android ہے یا iOS۔ ہم بھیجی گئی اطلاعات کا ریکارڈ بھی رکھتے ہیں،
                 تاکہ یہ یقینی بنایا جا سکے کہ وہ پہنچ گئیں۔
+              </li>
+              <li>
+                <strong>کریش رپورٹس۔</strong> اگر ایپ کی کوئی اسکرین خراب ہو جائے تو ایپ خرابی کی تکنیکی تفصیل، ایپ کا ورژن
+                اور فون کا سسٹم ورژن ہمارے اپنے سرور پر بھیجتی ہے (سائن اِن ہوں تو اکاؤنٹ کے ساتھ)، تاکہ ہم مسئلہ ٹھیک کر
+                سکیں۔ یہ 90 دن بعد خود بخود حذف ہو جاتی ہیں۔
+              </li>
+              <li>
+                <strong>آپ کی بھیجی گئی رپورٹس</strong>، جب آپ کسی پروگرام، جنازہ اطلاع یا مسجد کو رپورٹ کرتے ہیں: وجہ اور آپ
+                کی لکھی تفصیل۔ یہ صرف Salah360 ٹیم دیکھتی ہے؛ مسجد کو معلوم نہیں ہوتا کہ کس نے رپورٹ کی۔
+              </li>
+              <li>
+                <strong>شرائط کی منظوری کا وقت</strong>، جب آپ سائن اَپ پر شرائطِ استعمال اور رازداری کی پالیسی قبول کرتے
+                ہیں۔
               </li>
             </ul>
 
@@ -213,6 +226,11 @@ export function getPrivacySections(lang: Lang): readonly LegalSection[] {
               اور نمازِ جنازہ کی اطلاعات، اور ہر فالور کا اس سے تعلق بھی مستقل طور پر حذف ہو جاتا ہے۔
             </p>
             <p>تلاش یا نماز کے وقت کے حساب کے لیے استعمال ہونے والی لوکیشن درخواست کے بعد محفوظ نہیں رکھی جاتی۔</p>
+            <p>
+              ایپ آپ کے پاس نہیں؟ ای میل کے ذریعے درخواست کے لیے{' '}
+              <Link href={localizePath('/delete-account', lang)}>اپنا اکاؤنٹ ڈیلیٹ کریں</Link> دیکھیں۔ کریش رپورٹس 90 دن بعد
+              حذف ہو جاتی ہیں؛ آپ کی بھیجی گئی رپورٹس اکاؤنٹ حذف ہونے کے بعد آپ کے نام کے بغیر رہتی ہیں۔
+            </p>
           </>
         ),
       },
@@ -348,6 +366,19 @@ export function getPrivacySections(lang: Lang): readonly LegalSection[] {
               when the app is installed, and whether the device is Android or iOS. We also keep a record of the
               notifications we send, so we can make sure they are delivered.
             </li>
+            <li>
+              <strong>Crash reports.</strong> If a screen in the app crashes, the app sends the technical details of the
+              error, the app version and your phone’s system version to our own server (linked to your account if you are
+              signed in), so we can fix it. They are deleted automatically after 90 days.
+            </li>
+            <li>
+              <strong>Reports you send</strong> when you report an event, Janazah alert or Masjid: the reason and any
+              details you write. Only the Salah360 team sees them; the Masjid is never told who reported it.
+            </li>
+            <li>
+              <strong>When you accepted our terms</strong>: the time you agreed to the Terms of Service and this Privacy
+              Policy at sign-up.
+            </li>
           </ul>
 
           <h3>If you are a Masjid Admin</h3>
@@ -458,6 +489,11 @@ export function getPrivacySections(lang: Lang): readonly LegalSection[] {
             prayer times, events and Janazah alerts, and every follower’s connection to it.
           </p>
           <p>Location used for a search or a prayer time calculation is not kept after the request.</p>
+          <p>
+            No longer have the app? See <Link href={localizePath('/delete-account', lang)}>Delete your account</Link> to
+            request deletion by email. Crash reports are deleted after 90 days; reports you sent are kept without your
+            name once your account is deleted.
+          </p>
         </>
       ),
     },

@@ -15,6 +15,9 @@ export const siteConfig = {
   url: (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.salah360.net').replace(/\/+$/, ''),
   founder: 'Talha Abbas',
   supportEmail: 'support@salah360.net',
+  /** The Android app's package name (salah360/app.json). Also used by /.well-known/assetlinks.json. */
+  androidPackage: 'com.salah360.app',
+  playStoreUrl: 'https://play.google.com/store/apps/details?id=com.salah360.app',
 } as const;
 
 type SiteCopy = {

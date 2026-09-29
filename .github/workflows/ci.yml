@@ -1,0 +1,22 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      # Route types for typed links (Link href, PageProps) come from Next itself.
+      - run: npx next typegen
+      - run: npx tsc --noEmit
+      - run: npm run lint

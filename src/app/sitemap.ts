@@ -8,6 +8,7 @@ const PAGES: { path: string; priority: number; changeFrequency: 'weekly' | 'mont
   { path: '/contact', priority: 0.5, changeFrequency: 'yearly' },
   { path: '/privacy', priority: 0.3, changeFrequency: 'yearly' },
   { path: '/terms', priority: 0.3, changeFrequency: 'yearly' },
+  { path: '/delete-account', priority: 0.2, changeFrequency: 'yearly' },
 ];
 
 /**
