@@ -1,5 +1,14 @@
 import { ImageResponse } from 'next/og';
 
+import {
+  BRAND_COLORS,
+  BRAND_TILE_MARK_OFFSET,
+  BRAND_TILE_RADIUS,
+  BRAND_TILE_SIZE,
+  MARK_ARCH,
+  MARK_DOT,
+  MARK_RING,
+} from '@/lib/brand-mark';
 import { SITE_COPY } from '@/lib/site-config';
 
 // GET route handlers are dynamic by default; this image never changes between deploys.
@@ -30,12 +39,13 @@ export function GET() {
       }}
     >
       <div style={{ display: 'flex', alignItems: 'center', gap: 20 }}>
-        <svg width="72" height="72" viewBox="0 0 40 40">
-          <rect width="40" height="40" rx="11" fill="#0a8a64" />
-          <circle cx="20" cy="21" r="12.5" fill="none" stroke="#fff" strokeOpacity="0.28" strokeWidth="1.4" />
-          <circle cx="28.84" cy="12.16" r="2.1" fill="#e2bd72" />
-          <path d="M13.6 29.5V21.2c0-3.9 2.7-6.5 6.4-9 3.7 2.5 6.4 5.1 6.4 9v8.3z" fill="#fff" />
-          <path d="M17.7 29.5v-4.6c0-1.5 1-2.6 2.3-3.4 1.3.8 2.3 1.9 2.3 3.4v4.6z" fill="#05634a" />
+        <svg width="72" height="72" viewBox={`0 0 ${BRAND_TILE_SIZE} ${BRAND_TILE_SIZE}`}>
+          <rect width={BRAND_TILE_SIZE} height={BRAND_TILE_SIZE} rx={BRAND_TILE_RADIUS} fill={BRAND_COLORS.green} />
+          <g transform={`translate(${BRAND_TILE_MARK_OFFSET} ${BRAND_TILE_MARK_OFFSET})`}>
+            <path d={MARK_RING} fill={BRAND_COLORS.ivory} />
+            <path d={MARK_ARCH} fill={BRAND_COLORS.ivory} fillRule="evenodd" />
+            <circle cx={MARK_DOT.cx} cy={MARK_DOT.cy} r={MARK_DOT.r} fill={BRAND_COLORS.gold} />
+          </g>
         </svg>
         <div style={{ display: 'flex', fontSize: 40, fontWeight: 700, letterSpacing: -1 }}>
           Salah<span style={{ color: '#34d399' }}>360</span>
