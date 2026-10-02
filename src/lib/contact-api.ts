@@ -1,8 +1,8 @@
 import type { Lang } from './i18n/lang';
 
 /**
- * The website's own path for sending a contact message. next.config.ts rewrites it to the
- * backend's `POST /contact`, which emails the message to the support inbox.
+ * The website's own route for sending a contact message (app/api/contact/route.ts). It
+ * forwards the message to the backend, which emails it to the support inbox.
  */
 const CONTACT_ENDPOINT = '/api/contact';
 
