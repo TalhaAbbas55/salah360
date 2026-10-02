@@ -34,7 +34,7 @@ export function Navbar({ lang, solid = false }: NavbarProps) {
   return (
     <header className="fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-5">
       <div
-        className={`mx-auto flex h-16 max-w-[1240px] items-center justify-between gap-4 rounded-full border px-3 transition-[background-color,border-color,box-shadow,backdrop-filter] duration-300 sm:px-4 ${
+        className={`mx-auto flex h-16 max-w-310 items-center justify-between gap-4 rounded-full border px-3 transition-[background-color,border-color,box-shadow,backdrop-filter] duration-300 sm:px-4 ${
           scrolled || solid
             ? 'border-border bg-surface-glass shadow-[0_8px_32px_-12px_rgb(var(--shadow)/0.18)] backdrop-blur-xl backdrop-saturate-150'
             : 'border-transparent bg-transparent'

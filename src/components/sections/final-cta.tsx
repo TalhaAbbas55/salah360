@@ -49,7 +49,7 @@ export function FinalCta({ lang }: { lang: Lang }) {
     <section id="get-app" aria-labelledby="cta-title" className="relative py-20 sm:py-28">
       <Container>
         <Reveal>
-          <div className="relative overflow-hidden rounded-t-[min(50vw,280px)] rounded-b-[32px] bg-band px-6 pb-14 pt-24 text-center text-band-foreground sm:px-12 sm:pb-20 sm:pt-32">
+          <div className="relative overflow-hidden rounded-t-[min(50vw,280px)] rounded-b-4xl bg-band px-6 pb-14 pt-24 text-center text-band-foreground sm:px-12 sm:pb-20 sm:pt-32">
             <div aria-hidden="true" className="pointer-events-none absolute inset-0">
               <div className="absolute inset-0 bg-[radial-gradient(60%_70%_at_50%_0%,#127656_0%,transparent_70%)]" />
               <div className="absolute inset-0 text-white/[0.05] [--pattern:currentColor]">
