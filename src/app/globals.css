@@ -218,6 +218,11 @@ section[id],
   scroll-margin-top: 88px;
 }
 
+/* The page behind an open modal dialog (the App Store "coming soon" one) doesn't scroll. */
+html:has(dialog:modal) {
+  overflow: hidden;
+}
+
 /* Subtle card lift used across sections. */
 .card-shadow {
   box-shadow:

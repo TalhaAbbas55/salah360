@@ -1,20 +1,17 @@
-import { ArrowRight, BadgeCheck, Clock, Languages } from 'lucide-react';
+import { BadgeCheck, Clock, Languages } from 'lucide-react';
 
-import { ButtonLink } from '@/components/ui/button-link';
+import { StoreBadges } from '@/components/store/store-badges';
 import { Container } from '@/components/ui/container';
 import { SerifAccent } from '@/components/ui/serif-accent';
 import { GeometricPattern } from '@/components/visuals/geometric-pattern';
 import { Globe } from '@/components/visuals/globe/globe';
 import { HeroFloatingCards } from '@/components/visuals/hero-floating-cards';
 import type { Lang } from '@/lib/i18n/lang';
-import { ctaLinks } from '@/lib/site-config';
 
 type HeroCopy = {
   badge: string;
   headline: React.ReactNode;
   description: string;
-  explore: string;
-  forMasjids: string;
   facts: readonly string[];
 };
 
@@ -31,8 +28,6 @@ const COPY: Record<Lang, HeroCopy> = {
     ),
     description:
       'Find nearby Masjids, discover accurate prayer times, stay connected with your Masjid, and receive important community alerts — wherever you are.',
-    explore: 'Explore Salah360',
-    forMasjids: 'For Masjids',
     facts: ['Verified Masjid profiles', 'Azan & Jamaat times', 'English & اردو'],
   },
   ur: {
@@ -44,8 +39,6 @@ const COPY: Record<Lang, HeroCopy> = {
     ),
     description:
       'قریبی مساجد تلاش کریں، نماز کے درست اوقات معلوم کریں، اپنی مسجد سے جڑے رہیں، اور جہاں بھی ہوں اہم کمیونٹی اطلاعات پائیں۔',
-    explore: 'Salah360 دیکھیں',
-    forMasjids: 'مساجد کے لیے',
     facts: ['تصدیق شدہ مسجد پروفائلز', 'اذان اور جماعت کے اوقات', 'انگریزی اور اردو'],
   },
 };
@@ -98,14 +91,8 @@ export function Hero({ lang }: { lang: Lang }) {
             {copy.description}
           </p>
 
-          <div className="mt-9 flex animate-fade-up flex-col gap-3 sm:flex-row" style={enter(3)}>
-            <ButtonLink href={ctaLinks(lang).explore} size="lg">
-              {copy.explore}
-              <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
-            </ButtonLink>
-            <ButtonLink href={ctaLinks(lang).forMasjids} variant="secondary" size="lg">
-              {copy.forMasjids}
-            </ButtonLink>
+          <div className="mt-9 animate-fade-up" style={enter(3)}>
+            <StoreBadges lang={lang} />
           </div>
 
           <ul className="mt-10 flex animate-fade-up flex-wrap gap-x-6 gap-y-3 text-sm text-muted" style={enter(4)}>

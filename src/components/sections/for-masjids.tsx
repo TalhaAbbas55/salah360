@@ -18,6 +18,7 @@ const COPY: Record<
     description: string;
     comingSoon: string;
     howItWorks: string;
+    verification: string;
     verifiedLead: string;
     verifiedBody: string;
     dashboardCaption: string;
@@ -25,6 +26,7 @@ const COPY: Record<
 > = {
   en: {
     eyebrow: 'For Masjids',
+    // Also the headline of the home page's For Masjids card (sections/purpose.tsx): keep the two the same.
     title: (
       <>
         Give Your Masjid a <SerifAccent className="text-[#e2bd72]">Digital Home.</SerifAccent>
@@ -34,9 +36,10 @@ const COPY: Record<
       'Salah360 helps Masjids create their online identity and stay connected with the people they serve — the regulars, the neighbours, and the travellers passing through.',
     comingSoon: 'Coming soon',
     howItWorks: 'How it works',
+    verification: 'Ways to verify',
     verifiedLead: 'Every Masjid is verified.',
     verifiedBody:
-      'Admins submit a photo and phone number, and the Salah360 team reviews each request before an admin can publish prayer times, events or alerts — so followers can trust what they see.',
+      'Admins confirm over WhatsApp, on the phone number from their Masjid’s Google Maps listing, or send a photo and phone number for the Salah360 team to review. Only then can an admin publish prayer times, events or alerts — so followers can trust what they see.',
     dashboardCaption: 'Useful for Muslims and Masjid Admins alike.',
   },
   ur: {
@@ -50,14 +53,15 @@ const COPY: Record<
       'Salah360 مساجد کو اپنی آن لائن شناخت بنانے اور ان لوگوں سے جڑے رہنے میں مدد دیتا ہے جن کی وہ خدمت کرتی ہیں — باقاعدہ نمازی، پڑوسی، اور گزرتے ہوئے مسافر۔',
     comingSoon: 'جلد آ رہا ہے',
     howItWorks: 'یہ کیسے کام کرتا ہے',
+    verification: 'تصدیق کے طریقے',
     verifiedLead: 'ہر مسجد تصدیق شدہ ہے۔',
     verifiedBody:
-      'ایڈمنز ایک تصویر اور فون نمبر جمع کراتے ہیں، اور Salah360 ٹیم ہر درخواست کا جائزہ لیتی ہے اس سے پہلے کہ ایڈمن نماز کے اوقات، پروگرامز یا اطلاعات شائع کر سکے — تاکہ فالورز جو دیکھیں اس پر بھروسہ کر سکیں۔',
+      'ایڈمنز واٹس ایپ پر تصدیق کرتے ہیں، اس فون نمبر پر جو مسجد کی گوگل میپس لسٹنگ پر درج ہے، یا ایک تصویر اور فون نمبر بھیجتے ہیں جس کا Salah360 ٹیم جائزہ لیتی ہے۔ اس کے بعد ہی ایڈمن نماز کے اوقات، پروگرامز یا اطلاعات شائع کر سکتا ہے — تاکہ فالورز جو دیکھیں اس پر بھروسہ کر سکیں۔',
     dashboardCaption: 'مسلمانوں اور مسجد ایڈمنز دونوں کے لیے مفید۔',
   },
 };
 
-/** The Masjid Admin pitch, on the always-dark emerald band in both themes. */
+/** The Masjid Admin pitch, on the always-dark emerald band in both themes. Opens the For Masjids page. */
 export function ForMasjids({ lang }: { lang: Lang }) {
   const copy = COPY[lang];
   const HowItWorksIcon = lang === 'ur' ? ArrowLeft : ArrowRight;
@@ -65,7 +69,7 @@ export function ForMasjids({ lang }: { lang: Lang }) {
     <section
       id="for-masjids"
       aria-labelledby="masjids-title"
-      className="relative overflow-hidden bg-band py-24 text-band-foreground sm:py-32"
+      className="relative overflow-hidden bg-band pb-24 pt-32 text-band-foreground sm:pb-32 sm:pt-40"
     >
       <div aria-hidden="true" className="pointer-events-none absolute inset-0">
         <div className="absolute inset-0 bg-[radial-gradient(70%_60%_at_85%_10%,#0e5c44_0%,transparent_60%),radial-gradient(50%_50%_at_0%_100%,rgb(214_174_98/0.1),transparent_70%)]" />
@@ -79,6 +83,7 @@ export function ForMasjids({ lang }: { lang: Lang }) {
           <div>
             <SectionHeading
               id="masjids-title"
+              as="h1"
               onBand
               eyebrow={copy.eyebrow}
               title={copy.title}
@@ -112,6 +117,9 @@ export function ForMasjids({ lang }: { lang: Lang }) {
                   className="size-4 transition-transform group-hover:translate-x-0.5"
                   aria-hidden="true"
                 />
+              </ButtonLink>
+              <ButtonLink href="#verification" variant="on-band-outline" size="lg">
+                {copy.verification}
               </ButtonLink>
             </Reveal>
 

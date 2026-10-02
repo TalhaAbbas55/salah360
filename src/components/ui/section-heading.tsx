@@ -10,6 +10,8 @@ type SectionHeadingProps = {
   align?: 'left' | 'center';
   /** For the always-dark emerald band sections. */
   onBand?: boolean;
+  /** `h1` for the section that opens a page (Features, For Masjids, About); `h2` everywhere else. */
+  as?: 'h1' | 'h2';
   id?: string;
 };
 
@@ -19,6 +21,7 @@ export function SectionHeading({
   description,
   align = 'left',
   onBand = false,
+  as: Heading = 'h2',
   id,
 }: SectionHeadingProps) {
   const centered = align === 'center';
@@ -30,12 +33,12 @@ export function SectionHeading({
         <StarGlyph className="size-2.5 opacity-80" />
         {eyebrow}
       </p>
-      <h2
+      <Heading
         id={id}
         className={`mt-4 text-balance text-[2rem] font-semibold leading-[1.08] tracking-[-0.035em] sm:text-[2.6rem] lg:text-5xl ${onBand ? 'text-band-foreground' : 'text-foreground'}`}
       >
         {title}
-      </h2>
+      </Heading>
       {description ? (
         <p
           className={`mt-5 text-pretty text-base leading-relaxed sm:text-lg ${onBand ? 'text-band-muted' : 'text-muted'} ${centered ? 'mx-auto' : ''} max-w-xl`}

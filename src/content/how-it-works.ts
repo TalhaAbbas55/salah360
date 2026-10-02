@@ -26,7 +26,7 @@ const MASJID_STEPS_BY_LANG: Record<Lang, readonly Step[]> = {
     { title: 'Register your Masjid', body: 'Sign up as a Masjid Admin with your Masjid’s name and address.' },
     {
       title: 'Get verified & build your profile',
-      body: 'Send a photo and phone number. The Salah360 team reviews every Masjid.',
+      body: 'Confirm over WhatsApp in about two minutes, on the number from your Masjid’s Google Maps listing — or send a photo and phone number for the Salah360 team to review.',
     },
     {
       title: 'Manage prayer times',
@@ -38,7 +38,7 @@ const MASJID_STEPS_BY_LANG: Record<Lang, readonly Step[]> = {
     { title: 'اپنی مسجد رجسٹر کریں', body: 'اپنی مسجد کے نام اور پتے کے ساتھ بطور مسجد ایڈمن سائن اپ کریں۔' },
     {
       title: 'تصدیق کروائیں اور پروفائل بنائیں',
-      body: 'ایک تصویر اور فون نمبر بھیجیں۔ Salah360 ٹیم ہر مسجد کا جائزہ لیتی ہے۔',
+      body: 'واٹس ایپ پر تقریباً دو منٹ میں تصدیق کریں، اس نمبر پر جو آپ کی مسجد کی گوگل میپس لسٹنگ پر درج ہے — یا تصویر اور فون نمبر بھیجیں جس کا Salah360 ٹیم جائزہ لے گی۔',
     },
     {
       title: 'نماز کے اوقات منظم کریں',

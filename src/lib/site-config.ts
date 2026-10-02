@@ -47,16 +47,21 @@ export const SITE_COPY: Record<Lang, SiteCopy> = {
   },
 };
 
+/** Tells Play Console that an install came from the website's own pages (badges, navbar, footer). */
+const WEBSITE_REFERRER = 'utm_source=salah360.net&utm_medium=website';
+
 /**
- * Where each call to action goes. `contactPage` follows the current language's route
- * (`/contact` or `/ur/contact`); everything else — anchors, mailto — is language-agnostic.
- * Add the Google Play / App Store links here once the app is published.
+ * Where each call to action goes. Page links follow the current language's route
+ * (`/features` or `/ur/features`); the store link and mailto are language-agnostic.
+ * There is no App Store link yet: the App Store badge opens a "coming soon" dialog
+ * (components/store/app-store-badge.tsx). Add the link here when the iPhone app ships.
  */
 export function ctaLinks(lang: Lang) {
   return {
-    explore: '#features',
-    getStarted: '#get-started',
-    forMasjids: '#for-masjids',
+    playStore: `${siteConfig.playStoreUrl}&referrer=${encodeURIComponent(WEBSITE_REFERRER)}`,
+    features: localizePath('/features', lang),
+    forMasjids: localizePath('/for-masjids', lang),
+    about: localizePath('/about', lang),
     contactPage: localizePath('/contact', lang),
     email: `mailto:${siteConfig.supportEmail}`,
   } as const;

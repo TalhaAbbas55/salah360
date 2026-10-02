@@ -5,6 +5,9 @@ import { siteConfig } from '@/lib/site-config';
 
 const PAGES: { path: string; priority: number; changeFrequency: 'weekly' | 'monthly' | 'yearly' }[] = [
   { path: '/', priority: 1, changeFrequency: 'weekly' },
+  { path: '/features', priority: 0.8, changeFrequency: 'monthly' },
+  { path: '/for-masjids', priority: 0.8, changeFrequency: 'monthly' },
+  { path: '/about', priority: 0.6, changeFrequency: 'monthly' },
   { path: '/contact', priority: 0.5, changeFrequency: 'yearly' },
   { path: '/privacy', priority: 0.3, changeFrequency: 'yearly' },
   { path: '/terms', priority: 0.3, changeFrequency: 'yearly' },

@@ -109,9 +109,9 @@ export function rootMetadata(lang: Lang): Metadata {
 }
 
 /**
- * Metadata for an inner page (privacy, contact, terms). Next merges metadata shallowly, so a
- * page that sets only `title` would otherwise keep the home page's og:title and og:url, and
- * WhatsApp would preview `/privacy` as the home page.
+ * Metadata for an inner page (features, for-masjids, about, privacy, contact, terms). Next
+ * merges metadata shallowly, so a page that sets only `title` would otherwise keep the home
+ * page's og:title and og:url, and WhatsApp would preview `/privacy` as the home page.
  */
 export function pageMetadata(
   lang: Lang,

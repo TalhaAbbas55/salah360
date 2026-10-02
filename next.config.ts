@@ -31,6 +31,12 @@ const nextConfig: NextConfig = {
         source: "/verify-admin",
         destination: `${apiUrl}/masjid-admin/verify/confirm`,
       },
+      // The contact form posts here (lib/contact-api.ts); the backend emails the message
+      // to the support inbox. Same-origin for the browser, so the backend needs no CORS.
+      {
+        source: "/api/contact",
+        destination: `${apiUrl}/contact`,
+      },
     ];
   },
 };

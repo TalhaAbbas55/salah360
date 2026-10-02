@@ -1,6 +1,7 @@
-import { ArrowLeft, ArrowRight } from 'lucide-react';
+import Link from 'next/link';
 
-import { ButtonLink } from '@/components/ui/button-link';
+import { LogoMark } from '@/components/layout/logo';
+import { StoreBadges } from '@/components/store/store-badges';
 import { Container } from '@/components/ui/container';
 import { Reveal } from '@/components/ui/reveal';
 import { SerifAccent } from '@/components/ui/serif-accent';
@@ -11,7 +12,7 @@ import { ctaLinks, siteConfig } from '@/lib/site-config';
 
 const COPY: Record<
   Lang,
-  { title: React.ReactNode; description: string; explore: string; contact: string; questions: string }
+  { title: React.ReactNode; description: string; questions: string; or: string; contact: string }
 > = {
   en: {
     title: (
@@ -19,10 +20,10 @@ const COPY: Record<
         Stay Connected. <SerifAccent className="text-[#e2bd72]">Pray Together.</SerifAccent>
       </>
     ),
-    description: 'Find your Masjid, stay informed, and make Jamaat a part of your journey wherever you go.',
-    explore: 'Explore Salah360',
-    contact: 'Contact us',
+    description: 'Get Salah360, find your Masjid, and make Jamaat a part of your journey wherever you go.',
     questions: 'Questions? Write to',
+    or: 'or',
+    contact: 'contact us',
   },
   ur: {
     title: (
@@ -30,19 +31,22 @@ const COPY: Record<
         جڑے رہیں۔ <SerifAccent className="text-[#e2bd72]">ساتھ نماز پڑھیں۔</SerifAccent>
       </>
     ),
-    description: 'اپنی مسجد تلاش کریں، باخبر رہیں، اور جہاں بھی جائیں جماعت کو اپنے سفر کا حصہ بنائیں۔',
-    explore: 'Salah360 دیکھیں',
-    contact: 'ہم سے رابطہ کریں',
+    description: 'Salah360 حاصل کریں، اپنی مسجد تلاش کریں، اور جہاں بھی جائیں جماعت کو اپنے سفر کا حصہ بنائیں۔',
     questions: 'سوال ہے؟ لکھیں',
+    or: 'یا',
+    contact: 'ہم سے رابطہ کریں',
   },
 };
 
+const LINK_CLASS =
+  'font-medium text-band-foreground underline decoration-white/30 underline-offset-4 hover:decoration-white';
+
+/** The closing band of the Features, For Masjids and About pages: get the app. */
 export function FinalCta({ lang }: { lang: Lang }) {
   const copy = COPY[lang];
   const links = ctaLinks(lang);
-  const ExploreIcon = lang === 'ur' ? ArrowLeft : ArrowRight;
   return (
-    <section id="get-started" aria-labelledby="cta-title" className="relative py-20 sm:py-28">
+    <section id="get-app" aria-labelledby="cta-title" className="relative py-20 sm:py-28">
       <Container>
         <Reveal>
           <div className="relative overflow-hidden rounded-t-[min(50vw,280px)] rounded-b-[32px] bg-band px-6 pb-14 pt-24 text-center text-band-foreground sm:px-12 sm:pb-20 sm:pt-32">
@@ -55,32 +59,27 @@ export function FinalCta({ lang }: { lang: Lang }) {
             </div>
 
             <div className="relative mx-auto max-w-2xl">
+              <LogoMark className="mx-auto size-16 rounded-[18px] shadow-[0_12px_32px_-12px_rgb(0_0_0/0.6)]" />
               <h2
                 id="cta-title"
-                className="text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.04em] sm:text-6xl"
+                className="mt-8 text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.04em] sm:text-6xl"
               >
                 {copy.title}
               </h2>
               <p className="mx-auto mt-6 max-w-lg text-pretty text-lg leading-relaxed text-band-muted">
                 {copy.description}
               </p>
-              <div className="mt-10 flex flex-col justify-center gap-3 sm:flex-row">
-                <ButtonLink href={links.explore} variant="on-band" size="lg">
-                  {copy.explore}
-                  <ExploreIcon className="size-4 transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
-                </ButtonLink>
-                <ButtonLink href={links.contactPage} variant="on-band-outline" size="lg">
-                  {copy.contact}
-                </ButtonLink>
-              </div>
+              <StoreBadges lang={lang} className="mt-10 justify-center" />
               <p className="mt-8 text-sm text-band-muted">
                 {copy.questions}{' '}
-                <a
-                  href={links.email}
-                  className="font-medium text-band-foreground underline decoration-white/30 underline-offset-4 hover:decoration-white"
-                >
+                <a href={links.email} className={LINK_CLASS}>
                   {siteConfig.supportEmail}
-                </a>
+                </a>{' '}
+                {copy.or}{' '}
+                <Link href={links.contactPage} className={LINK_CLASS}>
+                  {copy.contact}
+                </Link>
+                .
               </p>
             </div>
           </div>

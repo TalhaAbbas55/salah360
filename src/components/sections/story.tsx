@@ -56,11 +56,11 @@ const COPY: Record<Lang, StoryCopy> = {
   },
 };
 
-/** Why Salah360 exists, in the founder's words. Anchor for "About". */
+/** Why Salah360 exists, in the founder's words. Opens the About page. */
 export function Story({ lang }: { lang: Lang }) {
   const copy = COPY[lang];
   return (
-    <section id="about" aria-labelledby="story-title" className="relative py-24 sm:py-32">
+    <section id="about" aria-labelledby="story-title" className="relative pb-24 pt-32 sm:pb-32 sm:pt-40">
       <Container className="grid items-center gap-14 lg:grid-cols-[0.85fr_1.15fr] lg:gap-20">
         <Reveal className="relative mx-auto w-full max-w-[400px] lg:max-w-none">
           <div
@@ -86,7 +86,7 @@ export function Story({ lang }: { lang: Lang }) {
         </Reveal>
 
         <div>
-          <SectionHeading id="story-title" eyebrow={copy.eyebrow} title={copy.title} />
+          <SectionHeading id="story-title" as="h1" eyebrow={copy.eyebrow} title={copy.title} />
           <Reveal delay={0.1} className="mt-8 space-y-5 text-pretty text-[17px] leading-[1.75] text-muted">
             <p>{copy.paragraphs[0]}</p>
             <p>{copy.paragraphs[1]}</p>

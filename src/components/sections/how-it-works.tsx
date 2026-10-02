@@ -7,21 +7,22 @@ import { SerifAccent } from '@/components/ui/serif-accent';
 import { getMasjidSteps, getUserSteps, type Step } from '@/content/how-it-works';
 import type { Lang } from '@/lib/i18n/lang';
 
+/** Who the steps are for: someone looking for a Masjid, or the admin of one. */
+type Audience = 'muslims' | 'admins';
+
 function StepList({
   icon: Icon,
   audience,
   title,
   steps,
-  delay,
 }: {
   icon: LucideIcon;
   audience: string;
   title: string;
   steps: readonly Step[];
-  delay: number;
 }) {
   return (
-    <Reveal delay={delay} className="h-full">
+    <Reveal delay={0.1} className="h-full">
       <article className="h-full rounded-[28px] border border-border bg-surface p-6 card-shadow sm:p-9">
         <header className="flex items-center gap-3">
           <span className="flex size-11 items-center justify-center rounded-2xl bg-primary-soft text-primary-ink">
@@ -54,76 +55,81 @@ function StepList({
   );
 }
 
-const COPY: Record<
-  Lang,
-  {
-    eyebrow: string;
-    title: React.ReactNode;
-    description: string;
-    forMuslims: string;
-    userTitle: string;
-    forAdmins: string;
-    adminTitle: string;
-  }
-> = {
+type AudienceCopy = {
+  title: React.ReactNode;
+  description: string;
+  /** The small label and title on the steps card. */
+  cardLabel: string;
+  cardTitle: string;
+};
+
+const EYEBROW: Record<Lang, string> = { en: 'How it works', ur: 'یہ کیسے کام کرتا ہے' };
+
+const COPY: Record<Lang, Record<Audience, AudienceCopy>> = {
   en: {
-    eyebrow: 'How it works',
-    title: (
-      <>
-        Simple for everyone. <SerifAccent className="text-primary">On both sides.</SerifAccent>
-      </>
-    ),
-    description:
-      'Salah360 is one app with two experiences: one for the people looking for a Masjid, and one for the Masjids serving them.',
-    forMuslims: 'For Muslims',
-    userTitle: 'From search to Saff',
-    forAdmins: 'For Masjid Admins',
-    adminTitle: 'From sign-up to followers',
+    muslims: {
+      title: (
+        <>
+          Simple from <SerifAccent className="text-primary">the first tap.</SerifAccent>
+        </>
+      ),
+      description:
+        'Browse nearby Masjids as a guest. Sign in to follow the ones you pray at, and their updates reach you on their own.',
+      cardLabel: 'For Muslims',
+      cardTitle: 'From search to Saff',
+    },
+    admins: {
+      title: (
+        <>
+          Your Masjid online <SerifAccent className="text-primary">in four steps.</SerifAccent>
+        </>
+      ),
+      description:
+        'Masjid Admins use the same Salah360 app. Sign up as an admin, verify your Masjid, and start publishing.',
+      cardLabel: 'For Masjid Admins',
+      cardTitle: 'From sign-up to followers',
+    },
   },
   ur: {
-    eyebrow: 'یہ کیسے کام کرتا ہے',
-    title: (
-      <>
-        سب کے لیے آسان۔ <SerifAccent className="text-primary">دونوں طرف سے۔</SerifAccent>
-      </>
-    ),
-    description:
-      'Salah360 ایک ایپ ہے جس کے دو تجربات ہیں: ایک اس شخص کے لیے جو مسجد تلاش کر رہا ہے، اور ایک ان مساجد کے لیے جو ان کی خدمت کرتی ہیں۔',
-    forMuslims: 'مسلمانوں کے لیے',
-    userTitle: 'تلاش سے صف تک',
-    forAdmins: 'مسجد ایڈمنز کے لیے',
-    adminTitle: 'سائن اپ سے فالورز تک',
+    muslims: {
+      title: (
+        <>
+          پہلے ٹیپ سے ہی <SerifAccent className="text-primary">آسان۔</SerifAccent>
+        </>
+      ),
+      description:
+        'بطور مہمان قریبی مساجد دیکھیں۔ جن مساجد میں آپ نماز پڑھتے ہیں انہیں فالو کرنے کے لیے سائن اِن کریں، اور ان کی اپڈیٹس خود آپ تک پہنچتی رہیں گی۔',
+      cardLabel: 'مسلمانوں کے لیے',
+      cardTitle: 'تلاش سے صف تک',
+    },
+    admins: {
+      title: (
+        <>
+          آپ کی مسجد آن لائن، <SerifAccent className="text-primary">چار مراحل میں۔</SerifAccent>
+        </>
+      ),
+      description:
+        'مسجد ایڈمنز یہی Salah360 ایپ استعمال کرتے ہیں۔ بطور ایڈمن سائن اپ کریں، اپنی مسجد کی تصدیق کریں، اور شائع کرنا شروع کریں۔',
+      cardLabel: 'مسجد ایڈمنز کے لیے',
+      cardTitle: 'سائن اپ سے فالورز تک',
+    },
   },
 };
 
-export function HowItWorks({ lang }: { lang: Lang }) {
-  const copy = COPY[lang];
+const AUDIENCE_ICONS: Record<Audience, LucideIcon> = { muslims: UserRound, admins: Building2 };
+
+/**
+ * The four steps for one audience: on the Features page for people looking for a Masjid,
+ * on the For Masjids page for Masjid Admins.
+ */
+export function HowItWorks({ lang, audience }: { lang: Lang; audience: Audience }) {
+  const copy = COPY[lang][audience];
+  const steps = audience === 'admins' ? getMasjidSteps(lang) : getUserSteps(lang);
   return (
     <section id="how-it-works" aria-labelledby="how-title" className="relative py-24 sm:py-32">
-      <Container>
-        <SectionHeading
-          id="how-title"
-          align="center"
-          eyebrow={copy.eyebrow}
-          title={copy.title}
-          description={copy.description}
-        />
-        <div className="mt-14 grid gap-5 lg:grid-cols-2">
-          <StepList
-            icon={UserRound}
-            audience={copy.forMuslims}
-            title={copy.userTitle}
-            steps={getUserSteps(lang)}
-            delay={0}
-          />
-          <StepList
-            icon={Building2}
-            audience={copy.forAdmins}
-            title={copy.adminTitle}
-            steps={getMasjidSteps(lang)}
-            delay={0.1}
-          />
-        </div>
+      <Container className="grid items-center gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20">
+        <SectionHeading id="how-title" eyebrow={EYEBROW[lang]} title={copy.title} description={copy.description} />
+        <StepList icon={AUDIENCE_ICONS[audience]} audience={copy.cardLabel} title={copy.cardTitle} steps={steps} />
       </Container>
     </section>
   );

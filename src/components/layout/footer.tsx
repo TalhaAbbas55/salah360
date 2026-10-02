@@ -1,6 +1,7 @@
 import { Mail } from 'lucide-react';
 import Link from 'next/link';
 
+import { StoreBadges } from '@/components/store/store-badges';
 import { Container } from '@/components/ui/container';
 import { StarGlyph } from '@/components/ui/star-glyph';
 import { getFooterLinks } from '@/content/navigation';
@@ -45,6 +46,7 @@ export function Footer({ lang }: { lang: Lang }) {
           <Logo lang={lang} />
           <p className="mt-5 font-serif text-2xl italic text-foreground">{SITE_COPY[lang].tagline}</p>
           <p className="mt-3 max-w-xs text-sm leading-relaxed text-muted">{copy.blurb}</p>
+          <StoreBadges lang={lang} className="mt-6" />
         </div>
 
         <nav aria-label={copy.footerNav}>

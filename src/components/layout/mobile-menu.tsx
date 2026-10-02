@@ -2,26 +2,20 @@
 
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { AnimatePresence, m } from 'motion/react';
+import Link from 'next/link';
 import { useCallback, useEffect, useId, useRef, useState, useSyncExternalStore } from 'react';
 import { createPortal } from 'react-dom';
 
-import { ButtonLink } from '@/components/ui/button-link';
+import { GetAppButton } from '@/components/store/get-app-button';
 import type { NavItem } from '@/content/navigation';
 import { dirOf, type Lang } from '@/lib/i18n/lang';
-import { ctaLinks } from '@/lib/site-config';
 
 import { LanguageMenu } from './language-menu';
 import { ThemeToggle } from './theme-toggle';
 
-const COPY: Record<Lang, { open: string; close: string; menu: string; mobileNav: string; joinCta: string }> = {
-  en: { open: 'Open menu', close: 'Close menu', menu: 'Menu', mobileNav: 'Mobile', joinCta: 'Join Salah360' },
-  ur: {
-    open: 'مینو کھولیں',
-    close: 'مینو بند کریں',
-    menu: 'مینو',
-    mobileNav: 'موبائل مینو',
-    joinCta: 'Salah360 میں شامل ہوں',
-  },
+const COPY: Record<Lang, { open: string; close: string; menu: string; mobileNav: string }> = {
+  en: { open: 'Open menu', close: 'Close menu', menu: 'Menu', mobileNav: 'Mobile' },
+  ur: { open: 'مینو کھولیں', close: 'مینو بند کریں', menu: 'مینو', mobileNav: 'موبائل مینو' },
 };
 
 /**
@@ -32,11 +26,12 @@ const COPY: Record<Lang, { open: string; close: string; menu: string; mobileNav:
 export function MobileMenu({
   lang,
   navItems,
-  activeSection,
+  activePath,
 }: {
   lang: Lang;
   navItems: readonly NavItem[];
-  activeSection: string | null;
+  /** The current page, without its language prefix. */
+  activePath: string;
 }) {
   const [open, setOpen] = useState(false);
   const panelId = useId();
@@ -150,7 +145,7 @@ export function MobileMenu({
                       <ul>
                         {navItems.map((item, index) => (
                           <m.li
-                            key={item.href}
+                            key={item.path}
                             initial={{ opacity: 0, x: rtl ? 8 : -8 }}
                             animate={{ opacity: 1, x: 0 }}
                             transition={{
@@ -158,15 +153,15 @@ export function MobileMenu({
                               duration: 0.3,
                             }}
                           >
-                            <a
+                            <Link
                               href={item.href}
                               onClick={close}
-                              aria-current={activeSection === item.sectionId ? 'true' : undefined}
-                              className="flex items-center justify-between rounded-2xl px-4 py-3.5 text-lg font-medium tracking-[-0.02em] transition-colors hover:bg-surface-muted aria-[current=true]:text-primary"
+                              aria-current={activePath === item.path ? 'page' : undefined}
+                              className="flex items-center justify-between rounded-2xl px-4 py-3.5 text-lg font-medium tracking-[-0.02em] transition-colors hover:bg-surface-muted aria-[current=page]:text-primary"
                             >
                               {item.label}
                               <ItemArrow className="size-4 text-subtle" aria-hidden="true" />
-                            </a>
+                            </Link>
                           </m.li>
                         ))}
                       </ul>
@@ -175,9 +170,7 @@ export function MobileMenu({
                       <LanguageMenu lang={lang} align="start" />
                       <ThemeToggle lang={lang} />
                     </div>
-                    <ButtonLink href={ctaLinks(lang).getStarted} onClick={close} size="lg" className="mt-3 w-full">
-                      {copy.joinCta}
-                    </ButtonLink>
+                    <GetAppButton lang={lang} size="lg" onClick={close} className="mt-3" />
                   </m.div>
                 </>
               ) : null}

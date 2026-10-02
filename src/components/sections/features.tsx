@@ -127,6 +127,7 @@ function JamaatNotificationPreview({ lang }: { lang: Lang }) {
   );
 }
 
+/** Everything the app does for someone looking for a Masjid. Opens the Features page. */
 export function Features({ lang }: { lang: Lang }) {
   const copy = COPY[lang];
   const highlights = getFeatureHighlights(lang);
@@ -138,10 +139,10 @@ export function Features({ lang }: { lang: Lang }) {
   ];
 
   return (
-    <section id="features" aria-labelledby="features-title" className="relative border-t border-border py-24 sm:py-32">
+    <section id="features" aria-labelledby="features-title" className="relative pb-24 pt-32 sm:pb-32 sm:pt-40">
       <Container>
         <div className="flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
-          <SectionHeading id="features-title" eyebrow={copy.eyebrow} title={copy.title} />
+          <SectionHeading id="features-title" as="h1" eyebrow={copy.eyebrow} title={copy.title} />
           <Reveal delay={0.1} className="max-w-sm text-pretty leading-relaxed text-muted lg:pb-2">
             {copy.description}
           </Reveal>

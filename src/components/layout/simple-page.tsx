@@ -10,6 +10,7 @@ import { localizePath, type Lang } from '@/lib/i18n/lang';
 import { Footer } from './footer';
 import { LanguageMenu } from './language-menu';
 import { Logo } from './logo';
+import { Navbar } from './navbar';
 import { ScrollTopButton } from './scroll-top-button';
 import { ThemeToggle } from './theme-toggle';
 
@@ -22,39 +23,46 @@ type SimplePageProps = {
   description?: ReactNode;
   /** Small line under the description, e.g. "Last updated …". */
   meta?: ReactNode;
+  /** The site's full navbar instead of the slim header: for a page that is in the nav (Contact). */
+  fullNavbar?: boolean;
   children: ReactNode;
 };
 
 /** Shell for secondary pages (Privacy, Contact, Terms): slim header, page intro, content, footer. */
-export function SimplePage({ lang, eyebrow, title, description, meta, children }: SimplePageProps) {
+export function SimplePage({ lang, eyebrow, title, description, meta, fullNavbar = false, children }: SimplePageProps) {
   const BackIcon = lang === 'ur' ? ArrowRight : ArrowLeft;
   return (
     <>
-      <header className="border-b border-border">
-        <Container className="flex h-20 items-center justify-between gap-3">
-          <Logo lang={lang} />
-          <div className="flex items-center gap-1">
-            <Link
-              href={localizePath('/', lang)}
-              aria-label={BACK_TO_HOME[lang]}
-              className="inline-flex items-center gap-2 rounded-full px-3 py-2 text-sm font-medium text-muted transition-colors hover:bg-surface-muted hover:text-foreground"
-            >
-              <BackIcon className="size-4" aria-hidden="true" />
-              <span className="hidden sm:inline" aria-hidden="true">
-                {BACK_TO_HOME[lang]}
-              </span>
-            </Link>
-            <div className="ms-1 flex items-center gap-0.5 border-s border-border ps-2">
-              <LanguageMenu lang={lang} />
-              <ThemeToggle lang={lang} />
+      {fullNavbar ? (
+        <Navbar lang={lang} />
+      ) : (
+        <header className="border-b border-border">
+          <Container className="flex h-20 items-center justify-between gap-3">
+            <Logo lang={lang} />
+            <div className="flex items-center gap-1">
+              <Link
+                href={localizePath('/', lang)}
+                aria-label={BACK_TO_HOME[lang]}
+                className="inline-flex items-center gap-2 rounded-full px-3 py-2 text-sm font-medium text-muted transition-colors hover:bg-surface-muted hover:text-foreground"
+              >
+                <BackIcon className="size-4" aria-hidden="true" />
+                <span className="hidden sm:inline" aria-hidden="true">
+                  {BACK_TO_HOME[lang]}
+                </span>
+              </Link>
+              <div className="ms-1 flex items-center gap-0.5 border-s border-border ps-2">
+                <LanguageMenu lang={lang} />
+                <ThemeToggle lang={lang} />
+              </div>
             </div>
-          </div>
-        </Container>
-      </header>
+          </Container>
+        </header>
+      )}
       <main id="main">
         <div className="relative overflow-hidden border-b border-border">
           <GeometricPattern fade="top-right" size={60} />
-          <Container className="relative py-16 sm:py-24">
+          {/* Under the full navbar, which is fixed over the page, the intro starts lower. */}
+          <Container className={`relative ${fullNavbar ? 'pb-16 pt-32 sm:pb-24 sm:pt-40' : 'py-16 sm:py-24'}`}>
             <p className="inline-flex items-center gap-2 text-xs font-medium uppercase tracking-[0.18em] text-primary">
               <StarGlyph className="size-2.5 opacity-80" />
               {eyebrow}
