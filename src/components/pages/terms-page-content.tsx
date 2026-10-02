@@ -1,33 +1,36 @@
+import { LegalDocument } from '@/components/legal/legal-document';
 import { SimplePage } from '@/components/layout/simple-page';
+import { getTermsSections, TERMS_LAST_UPDATED } from '@/content/terms-of-service';
 import type { Lang } from '@/lib/i18n/lang';
-import { ctaLinks, siteConfig } from '@/lib/site-config';
 
-const COPY: Record<Lang, { eyebrow: string; title: string; body: string; contactLead: string }> = {
+const COPY: Record<Lang, { eyebrow: string; title: string; description: string; lastUpdated: string }> = {
   en: {
     eyebrow: 'Legal',
-    title: 'Terms of Use',
-    body: 'Salah360’s terms of use are being prepared and will be published here before the public launch.',
-    contactLead: 'For any questions, please write to',
+    title: 'Terms of Service',
+    description:
+      'The rules for using Salah360, written to be read: what the app is, what we ask of you and of Masjid Admins, and what we can and can’t promise.',
+    lastUpdated: 'Last updated',
   },
   ur: {
     eyebrow: 'قانونی',
     title: 'شرائطِ استعمال',
-    body: 'Salah360 کی شرائطِ استعمال تیار کی جا رہی ہیں اور عوامی لانچ سے پہلے یہاں شائع کر دی جائیں گی۔',
-    contactLead: 'کسی بھی سوال کے لیے، براہِ کرم لکھیں',
+    description:
+      'Salah360 استعمال کرنے کے اصول، آسان الفاظ میں: ایپ کیا ہے، ہم آپ سے اور مسجد ایڈمنز سے کیا چاہتے ہیں، اور ہم کس بات کا وعدہ کر سکتے ہیں اور کس کا نہیں۔',
+    lastUpdated: 'آخری بار اپڈیٹ کیا گیا',
   },
 };
 
 export function TermsPageContent({ lang }: { lang: Lang }) {
   const copy = COPY[lang];
-  const links = ctaLinks(lang);
   return (
-    <SimplePage lang={lang} eyebrow={copy.eyebrow} title={copy.title}>
-      <div className="legal-prose max-w-2xl">
-        <p>{copy.body}</p>
-        <p>
-          {copy.contactLead} <a href={links.email}>{siteConfig.supportEmail}</a>.
-        </p>
-      </div>
+    <SimplePage
+      lang={lang}
+      eyebrow={copy.eyebrow}
+      title={copy.title}
+      description={copy.description}
+      meta={`${copy.lastUpdated} ${TERMS_LAST_UPDATED[lang]}`}
+    >
+      <LegalDocument lang={lang} sections={getTermsSections(lang)} />
     </SimplePage>
   );
 }
