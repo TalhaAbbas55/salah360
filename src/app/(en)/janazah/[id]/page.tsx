@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { headers } from 'next/headers';
 import { notFound } from 'next/navigation';
 
 import { OpenInAppPageContent } from '@/components/pages/open-in-app-page-content';
@@ -13,5 +14,7 @@ export const metadata: Metadata = {
 export default async function SharedJanazahPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   if (!isUuid(id)) notFound();
-  return <OpenInAppPageContent kind="janazah" id={id} />;
+  // The page differs by phone (Android, iPhone, other), so it is rendered per request.
+  const userAgent = (await headers()).get('user-agent');
+  return <OpenInAppPageContent kind="janazah" id={id} userAgent={userAgent} />;
 }

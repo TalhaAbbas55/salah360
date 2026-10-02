@@ -73,6 +73,7 @@ Both root layouts render the same `RootShell` component (fonts, the pre-paint th
 - **Privacy Policy** (`/privacy`, `/ur/privacy`) text lives in `src/content/privacy-policy.tsx` and describes what the app, backend and database actually do. Update both languages (and `PRIVACY_LAST_UPDATED`) whenever data handling changes.
 - **Contact** (`/contact`, `/ur/contact`): topics are in `src/content/contact.ts`. There's no backend, so the form opens the visitor's email app with the message filled in.
 - **Terms** (`/terms`, `/ur/terms`) is still a placeholder saying the terms are being prepared.
+- **Shared links and masjid QR codes** (`/masjid/<id>`, `/events/<id>`, `/janazah/<id>`): the links the app's Share button sends, and what a masjid's printed QR code holds, so these URLs must never change. With the app installed and its links verified, Android opens the app and the page is never seen. Otherwise `components/pages/open-in-app-page-content.tsx` picks a page from the request's User-Agent (`lib/device.ts`), which makes these routes server-rendered per request: Android is sent on at once (`components/open-in-app/android-app-redirect.tsx`: the app if installed, else Google Play, via the `intent:` link built in `lib/app-links.ts`), iPhone and iPad get a "coming soon" page, and a computer gets both buttons. When the iPhone app ships, replace that page with an App Store link.
 
 ## SEO and link previews
 
