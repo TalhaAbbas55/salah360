@@ -372,7 +372,8 @@ export function getPrivacySections(lang: Lang): readonly LegalSection[] {
               <strong>We never sell your information</strong>, and there are no ads or advertising trackers in Salah360.
             </li>
             <li>
-              Location is optional, used only while you use the app, and not stored as a history of where you have been.
+              Location is optional. Apart from prayer reminders (if you choose), it is used only while you use the app,
+              and it is never stored as a history of where you have been.
             </li>
             <li>You can delete your account from inside the app at any time.</li>
           </ul>
@@ -413,6 +414,13 @@ export function getPrivacySections(lang: Lang): readonly LegalSection[] {
               <strong>Location</strong>, only if you allow it and only while the app is open. We use it to centre the
               map, find Masjids and events near you, and work out today’s prayer times and the Qibla direction for where
               you are.
+            </li>
+            <li>
+              <strong>Prayer reminders</strong>, if you turn them on: your most recent location, your device’s time
+              zone and language, your reminder settings and the prayer times calculated for you. Our server uses them to
+              send each reminder with the Jamaat time at the Masjid nearest to you. If you also allow location “all the
+              time”, the app updates this location when you move, even while it is closed. We keep only the latest
+              location, never a history, and delete it when you turn reminders off or uninstall the app.
             </li>
             <li>
               <strong>Masjids you follow</strong>, so we can show them in My Masjids and send you their updates.
@@ -599,7 +607,10 @@ export function getPrivacySections(lang: Lang): readonly LegalSection[] {
             If you are the verified admin of a Masjid, deleting your account also permanently deletes that Masjid, its
             prayer times, events and Janazah alerts, and every follower’s connection to it.
           </p>
-          <p>Location used for a search or a prayer time calculation is not kept on our servers after the request.</p>
+          <p>
+            Location used for a search or a prayer time calculation is not kept on our servers after the request. For
+            prayer reminders, only your latest location is kept, until you turn reminders off or uninstall the app.
+          </p>
           <p>
             A WhatsApp verification link stops working after 10 minutes. Messages you send through the contact form stay
             in our support mailbox for as long as we need them to help you; ask us and we will delete them.
