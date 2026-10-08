@@ -416,11 +416,13 @@ export function getPrivacySections(lang: Lang): readonly LegalSection[] {
               you are.
             </li>
             <li>
-              <strong>Prayer reminders</strong>, if you turn them on: your most recent location, your device’s time
-              zone and language, your reminder settings and the prayer times calculated for you. Our server uses them to
-              send each reminder with the Jamaat time at the Masjid nearest to you. If you also allow location “all the
-              time”, the app updates this location when you move, even while it is closed. We keep only the latest
-              location, never a history, and delete it when you turn reminders off or uninstall the app.
+              <strong>Prayer reminders</strong>, if you turn them on: your location from when you last used the app,
+              your device’s time zone and language, your reminder settings and the prayer times calculated for you. Our
+              server uses them to send each reminder with the Jamaat time at the Masjid nearest to you. If you also allow
+              location “all the time”, the app reads your location once when each prayer time starts, even if it is
+              closed, so the reminder names the Masjid nearest to where you are then. It is never tracked in between. We
+              keep only the latest location, never a history, and delete it when you turn reminders off or uninstall the
+              app.
             </li>
             <li>
               <strong>Masjids you follow</strong>, so we can show them in My Masjids and send you their updates.
