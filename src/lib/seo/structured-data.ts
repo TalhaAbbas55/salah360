@@ -32,6 +32,7 @@ export function homeStructuredData(lang: Lang) {
         },
         email: siteConfig.supportEmail,
         founder: { '@type': 'Person', name: siteConfig.founder },
+        sameAs: Object.values(siteConfig.social),
         contactPoint: {
           '@type': 'ContactPoint',
           contactType: 'customer support',

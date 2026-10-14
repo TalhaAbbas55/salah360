@@ -18,6 +18,11 @@ export const siteConfig = {
   /** The Android app's package name (salah360/app.json). Also used by /.well-known/assetlinks.json. */
   androidPackage: 'com.salah360.app',
   playStoreUrl: 'https://play.google.com/store/apps/details?id=com.salah360.app',
+  /** Official social profiles: linked from the footer and listed as `sameAs` in the JSON-LD. */
+  social: {
+    linkedin: 'https://www.linkedin.com/company/salah360/',
+    facebook: 'https://www.facebook.com/people/Salah360/61595240346026/',
+  },
 } as const;
 
 type SiteCopy = {

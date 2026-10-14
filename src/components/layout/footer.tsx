@@ -9,10 +9,16 @@ import { ctaLinks, SITE_COPY, siteConfig } from '@/lib/site-config';
 import type { Lang } from '@/lib/i18n/lang';
 
 import { Logo } from './logo';
+import { FacebookGlyph, LinkedInGlyph } from './social-glyphs';
+
+const SOCIAL_LINKS = [
+  { label: 'LinkedIn', href: siteConfig.social.linkedin, Glyph: LinkedInGlyph },
+  { label: 'Facebook', href: siteConfig.social.facebook, Glyph: FacebookGlyph },
+] as const;
 
 const COPY: Record<
   Lang,
-  { blurb: string; explore: string; footerNav: string; contact: string; founder: string; rights: string; care: string }
+  { blurb: string; explore: string; footerNav: string; contact: string; founder: string; follow: string; rights: string; care: string }
 > = {
   en: {
     blurb:
@@ -21,6 +27,7 @@ const COPY: Record<
     footerNav: 'Footer',
     contact: 'Contact',
     founder: 'Founder',
+    follow: 'Follow us',
     rights: 'All rights reserved.',
     care: 'Built with care for the Muslim community.',
   },
@@ -30,6 +37,7 @@ const COPY: Record<
     footerNav: 'فوٹر',
     contact: 'رابطہ',
     founder: 'بانی',
+    follow: 'ہمیں فالو کریں',
     rights: 'جملہ حقوق محفوظ ہیں۔',
     care: 'مسلم کمیونٹی کے لیے خلوص کے ساتھ بنایا گیا۔',
   },
@@ -74,6 +82,23 @@ export function Footer({ lang }: { lang: Lang }) {
           <p className="mt-6 text-sm text-muted">
             {copy.founder} <span className="text-foreground">{siteConfig.founder}</span>
           </p>
+          <p className="mt-8 text-xs font-medium uppercase tracking-[0.14em] text-subtle">{copy.follow}</p>
+          <ul className="mt-4 flex items-center gap-3">
+            {SOCIAL_LINKS.map(({ label, href, Glyph }) => (
+              <li key={label}>
+                <a
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`${siteConfig.name} on ${label}`}
+                  title={label}
+                  className="inline-flex size-10 items-center justify-center rounded-full border border-border text-muted transition-colors hover:border-primary hover:text-primary"
+                >
+                  <Glyph className="size-4" />
+                </a>
+              </li>
+            ))}
+          </ul>
         </div>
       </Container>
 

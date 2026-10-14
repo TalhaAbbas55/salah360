@@ -14,6 +14,20 @@ const nextConfig: NextConfig = {
   },
   async headers() {
     return [
+      // Baseline hardening for every page. Deliberately no Content-Security-Policy: it
+      // would also land on the proxied /verify-admin page and could replace the stricter
+      // one the backend sends there (and the inline theme/JSON-LD scripts need nonces first).
+      {
+        source: '/:path*',
+        headers: [
+          // No other site may frame these pages (clickjacking).
+          { key: 'X-Frame-Options', value: 'DENY' },
+          { key: 'X-Content-Type-Options', value: 'nosniff' },
+          { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
+          // The site uses none of these; a compromised script couldn't either.
+          { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=()' },
+        ],
+      },
       // The admin verification page (proxied below) carries a one-time token: keep it out
       // of search results even if a crawler finds the link. robots.ts also disallows it.
       { source: '/verify-admin', headers: [{ key: 'X-Robots-Tag', value: 'noindex, nofollow' }] },
